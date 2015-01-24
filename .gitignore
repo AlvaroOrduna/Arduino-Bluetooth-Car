@@ -1,0 +1,33 @@
+# Created by https://www.gitignore.io
+
+### Java ###
+*.class
+*.jar
+*.war
+*.ear
+
+### IntelliJ ###
+Android/.idea/
+Android/.idea_modules/
+Android/out/
+Android/atlassian-ide-plugin.xml
+Android/com_crashlytics_export_strings.xml
+Android/crashlytics.properties
+Android/crashlytics-build.properties
+Android/local.properties
+*.iml
+*.ipr
+*.iws
+
+### Maven ###
+Android/target/
+Android/pom.xml.tag
+Android/pom.xml.releaseBackup
+Android/pom.xml.versionsBackup
+Android/pom.xml.next
+Android/release.properties
+
+### Gradle ###
+Android/.gradle
+Android/build/
+Android/gradle-app.setting
