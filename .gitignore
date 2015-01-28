@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io
 
+### Arduino Libraries ###
+libraries/readme.txt
+
 ### Java ###
 *.class
 *.jar
