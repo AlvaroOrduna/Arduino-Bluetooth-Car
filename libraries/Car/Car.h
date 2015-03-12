@@ -20,6 +20,9 @@
 
 #include "Motor.h"
 
+#define MAX_SPEED 255
+#define MAX_DISTRIBUTION 100
+
 class Car {
 
     public:

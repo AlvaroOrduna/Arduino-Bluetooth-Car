@@ -29,8 +29,8 @@ void Motor::setMotor(int pinA, int pinB, int pinPWM) {
     _pinPWM = pinPWM;
 }
 
-
 void Motor::go(int speed) {
+    speed = adjustSpeed(speed);
     if (speed > 0) {
         digitalWrite(_pinA, HIGH);
         digitalWrite(_pinB, LOW);
@@ -46,4 +46,11 @@ void Motor::stop() {
     digitalWrite(_pinA, LOW);
     digitalWrite(_pinB, LOW);
     analogWrite(_pinPWM, 0);
+}
+
+int Motor::adjustSpeed(int speed) {
+    speed = min(speed, MAX_SPEED);
+    speed = max(speed, -MAX_SPEED);
+
+    return speed;
 }

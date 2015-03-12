@@ -19,6 +19,13 @@
 #include <Motor.h>
 #include <Parser.h>
 #include <ProximitySensor.h>
+#include <SoftwareSerial.h>
+
+#define RxD 0
+#define TxD 1
+
+#define STATE_GO   'G'
+#define STATE_STOP 'S'
 
 #define SECURITY_DISTANCE 10
 
@@ -28,26 +35,49 @@ Parser parser;
 
 ProximitySensor proximitySensor;
 
+SoftwareSerial BTSerial(RxD, TxD);
+
+char last_state;
+
 int speed;
 int distribution;
 
 void setup() {
   Serial.begin(9600);
+  Serial.flush();
+  
+  BTSerial.begin(9600);
+  BTSerial.flush();
+  BTSerial.println("Ready");
+  delay(500);
+  
+  last_state = STATE_STOP;
 }
 
 void loop() {
-  if (Serial.available()){
-    parser.setPhrase(Serial.readString());
+  if (BTSerial.available()){
+    String phrase = BTSerial.readString();
+    parser.setPhrase(phrase);
 
     speed = parser.getSpeed();
     distribution = parser.getDistribution();
     
     if (proximitySensor.getDistance() > SECURITY_DISTANCE || speed < 0) {
       car.go(speed, distribution);
+      last_state = STATE_GO;
     } else if (speed == 0) {
       car.stop();
+      last_state = STATE_STOP;
     } else {
-      Serial.println("Bloqueado");
+      BTSerial.println("Bloqueado");
+      car.stop();
+      last_state = STATE_STOP;
+    }
+  } else {
+    if (proximitySensor.getDistance() < SECURITY_DISTANCE && speed > 0 && last_state != STATE_STOP) {
+      BTSerial.println("Bloqueado");
+      car.stop();
+      last_state = STATE_STOP;
     }
   }
 }

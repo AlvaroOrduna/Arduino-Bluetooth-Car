@@ -17,9 +17,6 @@
 
 #include "Car.h"
 
-#define MAX_SPEED 255
-#define MAX_DISTRIBUTION 100
-
 Car::Car(int pinLA, int pinLB, int pinLPWM, int pinRA, int pinRB, int pinRPWM) {
     _motorI.setMotor(pinLA, pinLB, pinLPWM);
     _motorD.setMotor(pinRA, pinRB, pinRPWM);
@@ -34,9 +31,9 @@ void Car::go(int speed, int distribution) {
 
         if (distribution > 0) {
             _motorI.go(speed);
-            _motorD.go(speed * (1 - abs(distribution) / MAX_DISTRIBUTION));
+            _motorD.go(speed * (1 - ((double) abs(distribution) / MAX_DISTRIBUTION)));
         } else if (distribution < 0) {
-            _motorI.go(speed * (1 - abs(distribution) / MAX_DISTRIBUTION));
+            _motorI.go(speed * (1 - ((double) abs(distribution) / MAX_DISTRIBUTION)));
             _motorD.go(speed);
         } else {
             _motorI.go(speed);
@@ -49,7 +46,6 @@ void Car::stop() {
     _motorI.stop();
     _motorD.stop();
 }
-
 
 int Car::adjustSpeed(int speed) {
     speed = min(speed, MAX_SPEED);

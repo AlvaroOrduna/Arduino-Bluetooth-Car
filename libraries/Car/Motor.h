@@ -20,6 +20,8 @@
 
 #include "Arduino.h"
 
+#define MAX_SPEED 255
+
 class Motor {
 
     public:
@@ -30,6 +32,8 @@ class Motor {
         void stop();
 
     private:
+        int adjustSpeed(int speed);
+
         int _pinA;
         int _pinB;
         int _pinPWM;
