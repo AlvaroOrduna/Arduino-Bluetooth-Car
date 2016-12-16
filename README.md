@@ -1,7 +1,7 @@
 # Arduino Bluetooth Car
 
     Autor: Álvaro Orduna León
-    Estado: en desarrollo
+    Estado: descontinuado
 
 ## Descripción
 
